@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,23 +13,23 @@
         <div class="row">
             <div class="col-md-8">
                 <h4 class="mb-3">Product Information</h4>
-                <form method="" action="#">
+                <h4 id="response"></h4>
+                <form id="submitData"  method="POST">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="productName">Product Name</label>
-                            <input type="text" class="form-control" id="productName" placeholder="" required>
+                            <input type="text" class="form-control" name="product_name" id="productName" placeholder="" required>
                             
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="quantity">Quantity</label>
-                            <input type="text" class="form-control" id="quantity" placeholder="" required>
+                            <input type="number" class="form-control" name="quantity" id="quantity" placeholder="" required>
                             
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="price">Price</label>
-                            <input type="text" class="form-control" id="price" placeholder="" required>
-                            
+                            <input type="number" class="form-control" name="price" id="price" placeholder="" required>
                         </div>
 
                         <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
@@ -39,6 +40,8 @@
                 </form>
 
                 <hr class="mb-4">
+
+                <div id="result"></div>
 
                 <table class="table">
                     <thead>
@@ -67,8 +70,20 @@
 
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).on('submit','#submitData',function(e){
+                e.preventDefault();
+                $.ajax({
+                method:"POST",
+                url: "process-data.php",
+                data:$(this).serialize(),
+                success: function(data){
+                    alert("Great!: " + data);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
