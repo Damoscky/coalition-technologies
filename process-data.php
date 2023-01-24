@@ -19,7 +19,7 @@ date_default_timezone_set('America/Los_Angeles');
             }
         }
     }else{
-        echo "";
+        echo "Request was not submitted.";
     }
 
 
