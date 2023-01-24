@@ -49,20 +49,50 @@
                         <th scope="col">S/N</th>
                         <th scope="col">Product Name</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col">Price Per Item</th>
-                        <th scope="col">Date Submited</th>
-                        <th scope="col">Total value</th>
+                        <th scope="col">Price Per Item ($)</th>
+                        <th scope="col">Date Submitted</th>
+                        <th scope="col">Total value ($)</th>
+                        <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Test product</td>
-                            <td>2</td>
-                            <td>$400</td>
-                            <td>2023-25-01</td>
-                            <td>$800</td>
-                        </tr>
+                        <?php
+
+                            include 'db-connection.php';
+                            $query = "SELECT * FROM product_table order by date_created DESC";
+                            $sendQuery = mysqli_query($conn, $query);
+                            $record = mysqli_num_rows($sendQuery);
+
+                            if($record > 0){
+                                $sn = 0;
+                                while($row = mysqli_fetch_array($sendQuery)){
+                                    $id = $row ['id'];
+                                    $totalPrice = $row['price'] * $row['quantity'];
+                                    $status = $row['is_active'];
+                                    if ($status == 1) {
+                                        $productStatus = "<a type='button' class='btn btn-primary' title='Active'>Active <i class='fa fa-times'></i> </a>";
+                                    }else{
+                                        $productStatus = "<a type='button' class='btn btn-warning' title='Activate'>Inactive <i class='fa fa-check'> </i> </a>";
+                                    }                                 
+                                                                    
+                                echo "<tr>
+                                
+                                        <th scope='row'>"; echo $sn = $sn + 1; echo "</th>
+                                        <td> "; echo $row['product_name']; echo " </td>
+                                        <td>"; echo $row['quantity']; echo "</td>
+                                        <td>"; echo $row['price']; echo "</td>
+                                        <td>"; echo date("d/m/Y", strtotime($row['date_created'])); echo "</td>
+                                        <td>"; echo $totalPrice; echo "</td>
+                                        <td>"; echo $productStatus; echo "</td>
+                                    </tr>";
+                                }
+                            }else{
+                                echo "<div class='alert alert-danger'>
+                                        <strong>ALERT! </strong>No Record Available!
+                                    </div>";
+                            }
+                        ?>
+                       
                     </tbody>
                 </table>
             </div>

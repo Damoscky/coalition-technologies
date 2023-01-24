@@ -10,7 +10,7 @@ date_default_timezone_set('America/Los_Angeles');
         if(empty($productName) && empty($quantity) && empty($price) ){
             echo "One or more fields is empty";
         }else{
-            $query = "INSERT INTO product_table(product_name, quantity, price, data_created, is_active) VALUES('$productName', '$quantity', '$price', '$dateCreated', 1)";
+            $query = "INSERT INTO product_table(product_name, quantity, price, date_created, is_active) VALUES('$productName', '$quantity', '$price', '$dateCreated', 1)";
             $save_connect = $conn->query($query);
             if($save_connect == true){
                 echo "Product data was created successfully";
